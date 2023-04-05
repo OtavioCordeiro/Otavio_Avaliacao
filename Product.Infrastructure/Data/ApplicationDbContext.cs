@@ -7,6 +7,7 @@ namespace MyProduct.Infrastructure.Data
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
+            base.Database.EnsureCreated();
         }
 
         public DbSet<Product> Products { get; set; }

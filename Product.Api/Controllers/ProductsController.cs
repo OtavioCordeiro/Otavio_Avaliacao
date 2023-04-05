@@ -20,13 +20,13 @@ namespace MyProduct.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<ProductViewModel>> Create([FromBody] CreateProductRequest request)
         {
-            var category = await _productService.CreateAsync(request);
+            var product = await _productService.CreateAsync(request);
 
-            return CreatedAtAction(nameof(GetById), new { id = category.Id }, category);
+            return CreatedAtAction(nameof(GetById), new { id = product.Id }, product);
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<CategoryViewModel>>> GetAll()
+        public async Task<ActionResult<List<ProductViewModel>>> GetAll()
         {
             var products = await _productService.GetAllAsync();
 
@@ -34,7 +34,7 @@ namespace MyProduct.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<CategoryViewModel>> GetById(int id)
+        public async Task<ActionResult<ProductViewModel>> GetById(int id)
         {
             var product = await _productService.GetByIdAsync(id);
 
@@ -47,20 +47,20 @@ namespace MyProduct.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<CategoryViewModel>> Update(int id, [FromBody] UpdateProductViewModel request)
+        public async Task<ActionResult<ProductViewModel>> Update(int id, [FromBody] UpdateProductViewModel request)
         {
-            var category = await _productService.UpdateAsync(id, request);
+            var product = await _productService.UpdateAsync(id, request);
 
-            if (category == null)
+            if (product == null)
             {
                 return NotFound();
             }
 
-            return Ok(category);
+            return Ok(product);
         }
 
         [HttpPost("search")]
-        public async Task<ActionResult<List<CategoryViewModel>>> Search([FromBody] ProductFilter filter)
+        public async Task<ActionResult<List<ProductViewModel>>> Search([FromBody] ProductFilter filter)
         {
             if (filter?.Description == null && filter?.Situation == null && filter?.Category == null) return BadRequest("Preencha ao menos um campo do filtro");
 

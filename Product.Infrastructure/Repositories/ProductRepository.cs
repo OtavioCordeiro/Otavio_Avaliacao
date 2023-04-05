@@ -15,6 +15,21 @@ namespace MyProduct.Infrastructure.Repositories
             _context = context;
         }
 
+        public override async Task<List<Product>> GetAllAsync()
+        {
+            return await _context.Products.Include(p => p.Category).ToListAsync();
+        }
+
+        public override async Task<List<Product>> GetByFilterAsync(Expression<Func<Product, bool>> filter)
+        {
+            return await _context.Products.Where(filter).Include(p => p.Category).ToListAsync();
+        }
+
+        public override async Task<Product> GetByIdAsync(int id)
+        {
+            return await _context.Products.Include(p => p.Category).FirstOrDefaultAsync(p => p.Id == id);
+        }
+
         public async void Dispose()
         {
             await _context.DisposeAsync();

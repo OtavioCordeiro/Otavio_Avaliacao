@@ -16,6 +16,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Itens de Solução", "Itens
 		Descricao.txt = Descricao.txt
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{180F1956-0517-456C-9D9D-97078C3B506F}"
+	ProjectSection(SolutionItems) = preProject
+		Scripts\Create Database.sql = Scripts\Create Database.sql
+		Scripts\Create dbo.Categories.sql = Scripts\Create dbo.Categories.sql
+		Scripts\Create dbo.Products.sql = Scripts\Create dbo.Products.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

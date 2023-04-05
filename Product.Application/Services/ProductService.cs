@@ -49,7 +49,7 @@ namespace MyProduct.Application.Services
         public async Task<List<ProductViewModel>> SearchAsync(ProductFilter filter)
         {
             var categories = await _repository.GetByFilterAsync(c =>
-            (string.IsNullOrEmpty(filter.Description) || c.Name.Contains(filter.Description)) &&
+            (string.IsNullOrEmpty(filter.Description) || c.Description.Contains(filter.Description)) &&
             (filter.Situation == null || c.Situation.Equals(filter.Situation.Value)) &&
             (filter.Category == null || c.Category.Name.Contains(filter.Category)));
 
