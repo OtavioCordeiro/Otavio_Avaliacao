@@ -1,5 +1,5 @@
 # Api de Produtos utilizando a arquitetura Clean
-O objetivo dessa api é para o teste de avaliação
+O objetivo dessa api é para o teste de avaliação, escolhi usar a arquitetura clean por algumas de suas vantagens como: separação de responsabilidades, organização do código, flexibilidade, facilidade de manutenção entre outras.
 
 ## Tecnologias utilizadas
 - ASP.NET Core 6.0
