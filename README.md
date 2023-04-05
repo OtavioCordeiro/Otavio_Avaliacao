@@ -8,6 +8,10 @@ O objetivo dessa api é para o teste de avaliação, escolhi usar a arquitetura 
 - Microsoft.EntityFrameworkCore.Design 7.0.4
 - Swagger
 - SQL Server 
+- xUnit
+- Nsubstitute
+- Autofixture
+- FluentAssertions
 
 ## Pré-requisitos
 Visual Studio 2019 ou superior
