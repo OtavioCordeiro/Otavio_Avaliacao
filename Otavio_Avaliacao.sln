@@ -11,11 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyProduct.Application", "Pr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyProduct.Domain", "Product.Domain\MyProduct.Domain.csproj", "{50796DE3-5160-4F66-9A73-191B89D57752}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Itens de Solução", "Itens de Solução", "{219A83BD-150F-4014-9098-809D99826C89}"
-	ProjectSection(SolutionItems) = preProject
-		Descricao.txt = Descricao.txt
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{180F1956-0517-456C-9D9D-97078C3B506F}"
 	ProjectSection(SolutionItems) = preProject
 		Scripts\Create Database.sql = Scripts\Create Database.sql
