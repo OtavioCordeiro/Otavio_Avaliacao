@@ -11,10 +11,10 @@ namespace MyProduct.Application.Mappers
 
             return new Category() { Situation = category.Situation, Name = category.Name };
         }
-        internal static void ToCategoryUpdate(Category existingCategory, UpdateCategoryViewModel category)
+        internal static void ToCategoryUpdate(Category entity, UpdateCategoryViewModel request)
         {
-            existingCategory.Situation = category.Situation;
-            existingCategory.Name = category.Name;
+            entity.Situation = request.Situation != null ? request.Situation.Value : entity.Situation;
+            entity.Name = request.Name != null ? request.Name : entity.Name;
         }
         internal static List<CategoryViewModel> ToCategoryViewModel(List<Category> entities)
         {
@@ -57,11 +57,11 @@ namespace MyProduct.Application.Mappers
         }
         internal static void ToProductUpdate(Product entity, UpdateProductViewModel product)
         {
-            entity.CategoryId = product.CategoryId;
-            entity.Price = product.Price;
-            entity.Name = product.Name;
-            entity.Description = product.Description;
-            entity.Situation = product.Situation;
+            entity.CategoryId = product.CategoryId != null ? product.CategoryId.Value : entity.CategoryId;
+            entity.Price = product.Price != null ? product.Price.Value : entity.Price;
+            entity.Name = product.Name != null ? product.Name : entity.Name;
+            entity.Description = product.Description != null ? product.Description : entity.Description;
+            entity.Situation = product.Situation != null ? product.Situation.Value : entity.Situation;
         }
         internal static List<ProductViewModel> ToProductViewModel(List<Product> entities)
         {

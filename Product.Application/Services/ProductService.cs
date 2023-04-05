@@ -58,6 +58,16 @@ namespace MyProduct.Application.Services
 
         public async Task<ProductViewModel> UpdateAsync(int id, UpdateProductViewModel request)
         {
+            Category category = null;
+
+            if (request.CategoryId != null)
+            {
+                category = await _categoryRepository.GetByIdAsync(request.CategoryId.Value);
+
+                if (category == null)
+                    throw new ArgumentException("Categoria não encontrada");
+            }
+
             var entity = await _repository.GetByIdAsync(id);
 
             if (entity == null) return null;
@@ -65,6 +75,15 @@ namespace MyProduct.Application.Services
             ApplicationMapper.ToProductUpdate(entity, request);
 
             await _repository.UpdateAsync(entity);
+
+            if (category != null)
+            {
+                entity.Category = category;
+            }
+            else
+            {
+                entity.Category = await _categoryRepository.GetByIdAsync(entity.CategoryId);
+            }
 
             return ApplicationMapper.ToProductViewModel(entity);
         }
