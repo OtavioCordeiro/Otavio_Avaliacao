@@ -13,23 +13,18 @@ namespace MyProduct.Infrastructure.Data.EntityConfigurations
             builder.HasKey(p => p.Id);
 
             builder.Property(p => p.Id)
-                .HasColumnName("Id")
                 .IsRequired();
 
             builder.Property(p => p.Name)
-                .HasColumnName("Name")
                 .IsRequired();
 
             builder.Property(p => p.Description)
-                .HasColumnName("Description")
                 .IsRequired();
 
             builder.Property(p => p.Price)
-                .HasColumnName("Price")
                 .IsRequired();
 
             builder.Property(p => p.CategoryId)
-                .HasColumnName("CategoryId")
                 .IsRequired();
 
             builder.HasOne(p => p.Category)

@@ -21,20 +21,20 @@ namespace MyProduct.Application.Services
             Category categoryEntity = ApplicationMapper.ToCategoryEntity(category);
             await _repository.CreateAsync(categoryEntity);
 
-            return ApplicationMapper.ToCategoryViewModels(categoryEntity);
+            return ApplicationMapper.ToCategoryViewModel(categoryEntity);
         }
 
         public async Task<List<CategoryViewModel>> GetAllAsync()
         {
             var categoryEntities = await _repository.GetAllAsync();
-            List<CategoryViewModel> categoryViewModels = ApplicationMapper.ToCategoryViewModels(categoryEntities);
+            List<CategoryViewModel> categoryViewModels = ApplicationMapper.ToCategoryViewModel(categoryEntities);
             return categoryViewModels;
         }
 
         public async Task<CategoryViewModel> GetByIdAsync(int id)
         {
             var categoryEntity = await _repository.GetByIdAsync(id);
-            var category = ApplicationMapper.ToCategoryViewModels(categoryEntity);
+            var category = ApplicationMapper.ToCategoryViewModel(categoryEntity);
             return category;
         }
 
@@ -48,7 +48,7 @@ namespace MyProduct.Application.Services
 
             await _repository.UpdateAsync(existingCategory);
 
-            return ApplicationMapper.ToCategoryViewModels(existingCategory);
+            return ApplicationMapper.ToCategoryViewModel(existingCategory);
         }
 
         public async Task<List<CategoryViewModel>> SearchAsync(CategoryFilter filter)
@@ -57,7 +57,7 @@ namespace MyProduct.Application.Services
             (string.IsNullOrEmpty(filter.Name) || c.Name.Contains(filter.Name)) &&
             (filter.Situation == null || c.Situation.Equals(filter.Situation.Value)));
 
-            var categoriesViewModel = ApplicationMapper.ToCategoryViewModels(categories);
+            var categoriesViewModel = ApplicationMapper.ToCategoryViewModel(categories);
 
             return categoriesViewModel;
         }

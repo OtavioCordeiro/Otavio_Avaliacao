@@ -1,6 +1,8 @@
-﻿namespace MyProduct.Domain.Interfaces.Repositories
+﻿using MyProduct.Domain.Models;
+
+namespace MyProduct.Domain.Interfaces.Repositories
 {
-    internal interface IProductRepository
+    public interface IProductRepository : IRepository<Product>, IDisposable
     {
     }
 }

@@ -1,4 +1,6 @@
-﻿using MyProduct.Application.Services.Interfaces;
+﻿using MyProduct.Application.Mappers;
+using MyProduct.Application.Models;
+using MyProduct.Application.Services.Interfaces;
 using MyProduct.Application.ViewModels;
 using MyProduct.Domain.Interfaces.Repositories;
 using MyProduct.Domain.Models;
@@ -7,36 +9,64 @@ namespace MyProduct.Application.Services
 {
     public class ProductService : IProductService
     {
-        private readonly IRepository<Product> _repository;
+        private readonly IProductRepository _repository;
+        private readonly ICategoryRepository _categoryRepository;
 
-        public ProductService(IRepository<Product> repository)
+        public ProductService(IProductRepository repository, ICategoryRepository categoryRepository)
         {
             _repository = repository;
+            _categoryRepository = categoryRepository;
         }
 
-        public void Create(CreateProductRequest product)
+        public async Task<ProductViewModel> CreateAsync(CreateProductRequest request)
         {
-            throw new NotImplementedException();
+            var category = await _categoryRepository.GetByIdAsync(request.CategoryId);
+
+            if (category == null)
+                throw new ArgumentException("Categoria não encontrada");
+
+            Product productEntity = ApplicationMapper.ToProductEntity(request);
+            productEntity.Category = category;
+
+            await _repository.CreateAsync(productEntity);
+
+            return ApplicationMapper.ToProductViewModel(productEntity);
         }
 
-        public List<ProductViewModel> GetAll()
+        public async Task<List<ProductViewModel>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            var entities = await _repository.GetAllAsync();
+            return ApplicationMapper.ToProductViewModel(entities);
         }
 
-        public List<ProductViewModel> GetByCategoryId(int categoryId)
+        public async Task<ProductViewModel> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var entity = await _repository.GetByIdAsync(id);
+            return ApplicationMapper.ToProductViewModel(entity);
+
         }
 
-        public ProductViewModel GetById(int id)
+        public async Task<List<ProductViewModel>> SearchAsync(ProductFilter filter)
         {
-            throw new NotImplementedException();
+            var categories = await _repository.GetByFilterAsync(c =>
+            (string.IsNullOrEmpty(filter.Description) || c.Name.Contains(filter.Description)) &&
+            (filter.Situation == null || c.Situation.Equals(filter.Situation.Value)) &&
+            (filter.Category == null || c.Category.Name.Contains(filter.Category)));
+
+            return ApplicationMapper.ToProductViewModel(categories);
         }
 
-        public void Update(UpdateProductViewModel product)
+        public async Task<ProductViewModel> UpdateAsync(int id, UpdateProductViewModel request)
         {
-            throw new NotImplementedException();
+            var entity = await _repository.GetByIdAsync(id);
+
+            if (entity == null) return null;
+
+            ApplicationMapper.ToProductUpdate(entity, request);
+
+            await _repository.UpdateAsync(entity);
+
+            return ApplicationMapper.ToProductViewModel(entity);
         }
     }
 }

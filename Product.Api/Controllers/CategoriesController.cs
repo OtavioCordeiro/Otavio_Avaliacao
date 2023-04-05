@@ -27,9 +27,9 @@ namespace MyProduct.Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<ActionResult<CategoryViewModel>> GetAll()
         {
-            var categories = _categoryService.GetAllAsync();
+            var categories = await _categoryService.GetAllAsync();
 
             return Ok(categories);
         }
@@ -37,7 +37,7 @@ namespace MyProduct.Api.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<CategoryViewModel>> GetById(int id)
         {
-            var category = _categoryService.GetByIdAsync(id);
+            var category = await _categoryService.GetByIdAsync(id);
 
             if (category == null)
             {

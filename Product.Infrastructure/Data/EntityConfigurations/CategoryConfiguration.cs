@@ -13,15 +13,12 @@ namespace MyProduct.Infrastructure.Data.EntityConfigurations
             builder.HasKey(c => c.Id);
 
             builder.Property(c => c.Id)
-                .HasColumnName("Id")
                 .IsRequired();
 
             builder.Property(c => c.Name)
-                .HasColumnName("Name")
                 .IsRequired();
 
             builder.Property(c => c.Situation)
-                .HasColumnName("Situation")
                 .IsRequired();
 
             builder.HasMany(c => c.Products)
