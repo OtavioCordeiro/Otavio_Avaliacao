@@ -1,5 +1,6 @@
 ﻿using Azure;
 using Microsoft.AspNetCore.Mvc;
+using MyProduct.Application.Models;
 using MyProduct.Application.Services.Interfaces;
 using MyProduct.Application.ViewModels;
 
@@ -18,9 +19,9 @@ namespace MyProduct.Api.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] CreateCategoryRequest request)
+        public async Task<ActionResult<CategoryViewModel>> Create([FromBody] CreateCategoryRequest request)
         {
-            var category = _categoryService.Create(request);
+            var category = await _categoryService.CreateAsync(request);
 
             return CreatedAtAction(nameof(GetById), new { id = category.Id }, category);
         }
@@ -28,15 +29,15 @@ namespace MyProduct.Api.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var categories = _categoryService.GetAll();
+            var categories = _categoryService.GetAllAsync();
 
             return Ok(categories);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public async Task<ActionResult<CategoryViewModel>> GetById(int id)
         {
-            var category = _categoryService.GetById(id);
+            var category = _categoryService.GetByIdAsync(id);
 
             if (category == null)
             {
@@ -47,12 +48,25 @@ namespace MyProduct.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] UpdateCategoryViewModel request)
+        public async Task<ActionResult<CategoryViewModel>> Update(int id, [FromBody] UpdateCategoryViewModel request)
         {
-            request.Id = id;
-            _categoryService.Update(request);
+            var category = await _categoryService.UpdateAsync(id, request);
 
-            return Ok();
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(category);
+        }
+
+        [HttpPost("search")]
+        public async Task<ActionResult<List<CategoryViewModel>>> Search([FromBody] CategoryFilter filter)
+        {
+            if (filter.Name == null && filter.Situation == null) return BadRequest("Preencha ao menos um campo do filtro");
+
+            var result = await _categoryService.SearchAsync(filter);
+            return Ok(result);
         }
     }
 }

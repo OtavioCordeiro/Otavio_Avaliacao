@@ -9,7 +9,13 @@ namespace MyProduct.Application.Mappers
         {
             if (category == null) return null;
 
-            return new Category() { IsActive = category.IsActive, Name = category.Name };
+            return new Category() { Situation = category.Situation, Name = category.Name };
+        }
+
+        internal static void ToCategoryUpdate(Category existingCategory, UpdateCategoryViewModel category)
+        {
+            existingCategory.Situation = category.Situation;
+            existingCategory.Name = category.Name;
         }
 
         internal static List<CategoryViewModel> ToCategoryViewModels(List<Category> categoryEntities)
@@ -34,7 +40,7 @@ namespace MyProduct.Application.Mappers
             return new CategoryViewModel()
             {
                 Name = entity.Name,
-                IsActive = entity.IsActive,
+                Situation = entity.Situation,
                 Id = entity.Id
             };
         }

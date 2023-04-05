@@ -21,6 +21,8 @@ Alterar produto
 
 Listar produtos (Deve haver a possibilidade de filtrar por categoria do produto, descrição do produto e situação do produto)
 Estrutura do banco de dados
+
+
 A estrutura descrita aqui dispõe apenas das informações básicas de cada tabela sendo
 necessária a inclusão de outros campos caso ache necessário.
 Categoria
@@ -35,4 +37,4 @@ Preço
 Situação (Ativo ou inativo)
 Entrega do teste
 O projeto (API e script para criação do banco de dados) deve estar em um repositório público
-no Github e o link para o projeto deve ser enviado para o e-mail rebecajsmelo@gmail.com.
+no Github e o link para o projeto deve ser enviado para o e-mail rebecajsmelo@gmail.com.

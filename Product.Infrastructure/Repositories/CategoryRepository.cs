@@ -15,9 +15,9 @@ namespace MyProduct.Infrastructure.Repositories
             _context = context;
         }
 
-        public void Dispose()
+        public async void Dispose()
         {
-            _context.Dispose();
+            await _context.DisposeAsync();
             GC.SuppressFinalize(this);
         }
     }

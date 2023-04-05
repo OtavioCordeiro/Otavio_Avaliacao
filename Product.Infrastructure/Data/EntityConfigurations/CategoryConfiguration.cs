@@ -20,8 +20,8 @@ namespace MyProduct.Infrastructure.Data.EntityConfigurations
                 .HasColumnName("Name")
                 .IsRequired();
 
-            builder.Property(c => c.IsActive)
-                .HasColumnName("IsActive")
+            builder.Property(c => c.Situation)
+                .HasColumnName("Situation")
                 .IsRequired();
 
             builder.HasMany(c => c.Products)

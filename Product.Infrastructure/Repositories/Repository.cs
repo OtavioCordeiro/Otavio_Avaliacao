@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyProduct.Domain.Interfaces.Repositories;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace MyProduct.Infrastructure.Repositories
 {
@@ -15,31 +16,31 @@ namespace MyProduct.Infrastructure.Repositories
             _dbSet = context.Set<T>();
         }
 
-        public void Create(T entity)
+        public async Task CreateAsync(T entity)
         {
-            _dbSet.Add(entity);
-            _context.SaveChanges();
+            await _dbSet.AddAsync(entity);
+            await _context.SaveChangesAsync();
         }
 
-        public List<T> GetAll()
+        public async Task<List<T>> GetAllAsync()
         {
-            return _dbSet.ToList();
+            return await _dbSet.ToListAsync();
         }
 
-        public List<T> GetByFilter(Expression<Func<T, bool>> filter)
+        public async Task<List<T>> GetByFilterAsync(Expression<Func<T, bool>> filter)
         {
-            return _dbSet.Where(filter).ToList();
+            return await _dbSet.Where(filter).ToListAsync();
         }
 
-        public T GetById(int id)
+        public async Task<T> GetByIdAsync(int id)
         {
-            return _dbSet.Find(id);
+            return await _dbSet.FindAsync(id);
         }
 
-        public void Update(T entity)
+        public async Task UpdateAsync(T entity)
         {
             _context.Entry(entity).State = EntityState.Modified;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using MyProduct.Application.Mappers;
+using MyProduct.Application.Models;
 using MyProduct.Application.Services.Interfaces;
 using MyProduct.Application.ViewModels;
 using MyProduct.Domain.Interfaces.Repositories;
@@ -15,29 +16,50 @@ namespace MyProduct.Application.Services
             _repository = repository;
         }
 
-        public CategoryViewModel Create(CreateCategoryRequest category)
+        public async Task<CategoryViewModel> CreateAsync(CreateCategoryRequest category)
         {
             Category categoryEntity = ApplicationMapper.ToCategoryEntity(category);
-            _repository.Create(categoryEntity);
+            await _repository.CreateAsync(categoryEntity);
 
             return ApplicationMapper.ToCategoryViewModels(categoryEntity);
         }
 
-        public List<CategoryViewModel> GetAll()
+        public async Task<List<CategoryViewModel>> GetAllAsync()
         {
-            var categoryEntities = _repository.GetAll();
+            var categoryEntities = await _repository.GetAllAsync();
             List<CategoryViewModel> categoryViewModels = ApplicationMapper.ToCategoryViewModels(categoryEntities);
             return categoryViewModels;
         }
 
-        public CategoryViewModel GetById(int id)
+        public async Task<CategoryViewModel> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var categoryEntity = await _repository.GetByIdAsync(id);
+            var category = ApplicationMapper.ToCategoryViewModels(categoryEntity);
+            return category;
         }
 
-        public void Update(UpdateCategoryViewModel category)
+        public async Task<CategoryViewModel> UpdateAsync(int id, UpdateCategoryViewModel category)
         {
-            throw new NotImplementedException();
+            var existingCategory = await _repository.GetByIdAsync(id);
+
+            if (existingCategory == null) return null;
+
+            ApplicationMapper.ToCategoryUpdate(existingCategory, category);
+
+            await _repository.UpdateAsync(existingCategory);
+
+            return ApplicationMapper.ToCategoryViewModels(existingCategory);
+        }
+
+        public async Task<List<CategoryViewModel>> SearchAsync(CategoryFilter filter)
+        {
+            var categories = await _repository.GetByFilterAsync(c =>
+            (string.IsNullOrEmpty(filter.Name) || c.Name.Contains(filter.Name)) &&
+            (filter.Situation == null || c.Situation.Equals(filter.Situation.Value)));
+
+            var categoriesViewModel = ApplicationMapper.ToCategoryViewModels(categories);
+
+            return categoriesViewModel;
         }
     }
 }
