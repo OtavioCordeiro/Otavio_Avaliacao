@@ -22,7 +22,23 @@ git clone https://github.com/OtavioCordeiro/Otavio_Avaliacao.git
 
 2. Abra o projeto no Visual Studio
 
-3. Abra o arquivo appsettings.json e configure a string de conexão com o banco de dados. Exemplo:
+3. Configurando o banco de dados com 2 opções
+
+### 3.1 Usando o banco em memória: 
+basta descomentar o código 
+```csharp
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseInMemoryDatabase("SistemaDb"));
+```
+
+e comentar o código
+```csharp
+//builder.Services.AddDbContext<ApplicationDbContext>(options => 
+//    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+```
+
+### 3.2 Usando o banco do sql Server
+
+Abra o arquivo appsettings.json e configure a string de conexão com o banco de dados. Exemplo:
 
 ```swift
 "ConnectionStrings": {
