@@ -7,6 +7,7 @@ using MyProduct.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using MyProduct.Domain.Interfaces.Repositories;
 using MyProduct.Infrastructure.Repositories;
+using MyProduct.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,9 +21,7 @@ builder.Services.AddSwaggerGen(options =>
     options.SwaggerDoc("v1", new OpenApiInfo { Title = "Product API", Version = "v1" });
 });
 
-//builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseInMemoryDatabase("SistemaDb"));
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
